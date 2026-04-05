@@ -1,10 +1,108 @@
-import { Complaint, statusConfig, priorityConfig, typeConfig } from '@/data/complaints';
+import { Complaint, ViolationRecord, statusConfig, priorityConfig, typeConfig, actionConfig } from '@/data/complaints';
 import Icon from '@/components/ui/icon';
 import { useState } from 'react';
 
 interface ComplaintDetailProps {
   complaint: Complaint;
   onBack: () => void;
+}
+
+function ViolationHistory({ history }: { history: ViolationRecord[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? history : history.slice(0, 2);
+
+  const formatDate = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
+
+  const riskLevel = history.length >= 3 ? 'high' : history.length === 2 ? 'medium' : 'low';
+  const riskConfig = {
+    high:   { label: 'Высокий риск',    color: '#dc2626', bg: 'rgba(220,38,38,0.08)',   border: 'rgba(220,38,38,0.2)' },
+    medium: { label: 'Средний риск',    color: '#d97706', bg: 'rgba(217,119,6,0.08)',   border: 'rgba(217,119,6,0.2)' },
+    low:    { label: 'Низкий риск',     color: '#16a34a', bg: 'rgba(22,163,74,0.08)',   border: 'rgba(22,163,74,0.2)' },
+  }[riskLevel];
+
+  return (
+    <div className="glass rounded-xl overflow-hidden">
+      <div className="px-3 pt-3 pb-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div
+            className="w-6 h-6 rounded-lg flex items-center justify-center"
+            style={{ background: 'rgba(124,58,237,0.1)' }}
+          >
+            <Icon name="History" size={13} style={{ color: '#7c3aed' }} />
+          </div>
+          <p className="text-xs font-semibold text-slate-700">История нарушений</p>
+          <span
+            className="text-xs font-semibold px-2 py-0.5 rounded-full"
+            style={{ color: riskConfig.color, background: riskConfig.bg, border: `1px solid ${riskConfig.border}` }}
+          >
+            {riskConfig.label}
+          </span>
+        </div>
+        <span
+          className="text-xs font-bold px-2 py-0.5 rounded-full"
+          style={{ background: 'rgba(124,58,237,0.08)', color: '#7c3aed' }}
+        >
+          {history.length}
+        </span>
+      </div>
+
+      <div className="px-3 pb-2 space-y-0">
+        {visible.map((record, i) => {
+          const action = actionConfig[record.action];
+          const isLast = i === visible.length - 1;
+          return (
+            <div key={record.id} className="relative flex gap-3 py-2">
+              {!isLast && (
+                <div
+                  className="absolute left-[13px] top-8 bottom-0 w-px"
+                  style={{ background: 'rgba(124,58,237,0.1)' }}
+                />
+              )}
+              <div className="relative shrink-0 mt-0.5">
+                <div
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background: action.bg, border: `1px solid ${action.color}30` }}
+                >
+                  <Icon name={action.icon} fallback="Circle" size={11} style={{ color: action.color }} />
+                </div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span
+                    className="text-xs font-semibold px-1.5 py-0.5 rounded-md"
+                    style={{ color: action.color, background: action.bg }}
+                  >
+                    {action.label}
+                  </span>
+                  <span className="text-xs text-slate-300 font-mono">{record.id}</span>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">{record.description}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs text-slate-300">{formatDate(record.date)}</span>
+                  <span className="text-xs text-slate-300">·</span>
+                  <span className="text-xs text-slate-400">{record.moderator}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {history.length > 2 && (
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="w-full px-3 py-2 flex items-center justify-center gap-1.5 text-xs font-medium transition-colors hover:bg-slate-50 border-t border-slate-100"
+          style={{ color: '#7c3aed' }}
+        >
+          <Icon name={expanded ? 'ChevronUp' : 'ChevronDown'} size={13} />
+          {expanded ? 'Свернуть' : `Ещё ${history.length - 2} запис${history.length - 2 === 1 ? 'ь' : 'и'}`}
+        </button>
+      )}
+    </div>
+  );
 }
 
 const actions = [
@@ -165,6 +263,10 @@ export default function ComplaintDetail({ complaint, onBack }: ComplaintDetailPr
               ))}
             </div>
           </div>
+        )}
+
+        {complaint.violationHistory && complaint.violationHistory.length > 0 && (
+          <ViolationHistory history={complaint.violationHistory} />
         )}
 
         <div className="glass rounded-xl p-3">

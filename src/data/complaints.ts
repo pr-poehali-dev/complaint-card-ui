@@ -2,6 +2,15 @@ export type ComplaintStatus = 'new' | 'in_review' | 'resolved' | 'rejected';
 export type ComplaintType = 'spam' | 'abuse' | 'fraud' | 'illegal' | 'misinformation' | 'other';
 export type ComplaintPriority = 'critical' | 'high' | 'medium' | 'low';
 
+export interface ViolationRecord {
+  id: string;
+  date: string;
+  type: ComplaintType;
+  action: 'warning' | 'mute' | 'ban_temp' | 'ban_perm' | 'content_removed' | 'none';
+  description: string;
+  moderator: string;
+}
+
 export interface Complaint {
   id: string;
   title: string;
@@ -17,6 +26,7 @@ export interface Complaint {
   evidence: string[];
   commentsCount: number;
   viewsCount: number;
+  violationHistory?: ViolationRecord[];
 }
 
 export const complaints: Complaint[] = [
@@ -34,6 +44,11 @@ export const complaints: Complaint[] = [
     evidence: ['screenshot_1.png', 'screenshot_2.png', 'chat_log.txt'],
     commentsCount: 3,
     viewsCount: 47,
+    violationHistory: [
+      { id: 'V-091', date: '2026-03-18T14:20:00', type: 'spam', action: 'warning', description: 'Рассылка рекламных сообщений в комментариях', moderator: 'Анна С.' },
+      { id: 'V-072', date: '2026-02-05T09:10:00', type: 'spam', action: 'mute', description: 'Повторная спам-рассылка после предупреждения', moderator: 'Дмитрий К.' },
+      { id: 'V-051', date: '2025-12-11T17:45:00', type: 'fraud', action: 'ban_temp', description: 'Фишинговые ссылки в личных сообщениях, временный бан на 7 дней', moderator: 'Анна С.' },
+    ],
   },
   {
     id: 'CMP-002',
@@ -66,6 +81,9 @@ export const complaints: Complaint[] = [
     evidence: ['receipt_1.jpg', 'receipt_2.jpg', 'comparison.jpg'],
     commentsCount: 12,
     viewsCount: 89,
+    violationHistory: [
+      { id: 'V-103', date: '2026-01-22T11:00:00', type: 'fraud', action: 'warning', description: 'Жалоба на несоответствие описания товара, предупреждение', moderator: 'Анна С.' },
+    ],
   },
   {
     id: 'CMP-004',
@@ -97,6 +115,10 @@ export const complaints: Complaint[] = [
     evidence: ['comment_screenshot.png'],
     commentsCount: 2,
     viewsCount: 31,
+    violationHistory: [
+      { id: 'V-088', date: '2026-03-01T09:30:00', type: 'abuse', action: 'warning', description: 'Оскорбительные высказывания в чате поддержки', moderator: 'Дмитрий К.' },
+      { id: 'V-061', date: '2026-01-14T16:00:00', type: 'abuse', action: 'mute', description: 'Угрозы в адрес другого пользователя, мут на 24 часа', moderator: 'Анна С.' },
+    ],
   },
   {
     id: 'CMP-006',
@@ -143,6 +165,15 @@ export const priorityConfig: Record<ComplaintPriority, { label: string; color: s
   high: { label: 'Высокий', color: '#ea580c', bg: 'rgba(234,88,12,0.08)' },
   medium: { label: 'Средний', color: '#d97706', bg: 'rgba(217,119,6,0.08)' },
   low: { label: 'Низкий', color: '#64748b', bg: 'rgba(100,116,139,0.08)' },
+};
+
+export const actionConfig: Record<ViolationRecord['action'], { label: string; icon: string; color: string; bg: string }> = {
+  warning:         { label: 'Предупреждение',    icon: 'AlertTriangle', color: '#d97706', bg: 'rgba(217,119,6,0.1)' },
+  mute:            { label: 'Мут',               icon: 'MicOff',        color: '#7c3aed', bg: 'rgba(124,58,237,0.1)' },
+  ban_temp:        { label: 'Временный бан',     icon: 'Clock',         color: '#ea580c', bg: 'rgba(234,88,12,0.1)' },
+  ban_perm:        { label: 'Перманентный бан',  icon: 'Ban',           color: '#dc2626', bg: 'rgba(220,38,38,0.1)' },
+  content_removed: { label: 'Контент удалён',    icon: 'Trash2',        color: '#64748b', bg: 'rgba(100,116,139,0.1)' },
+  none:            { label: 'Без мер',           icon: 'Minus',         color: '#94a3b8', bg: 'rgba(148,163,184,0.08)' },
 };
 
 export const typeConfig: Record<ComplaintType, { label: string; icon: string }> = {
