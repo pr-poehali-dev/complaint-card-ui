@@ -4,41 +4,41 @@
 
 @layer base {
   :root {
-    --background: 222 30% 8%;
-    --foreground: 210 40% 96%;
+    --background: 240 20% 97%;
+    --foreground: 240 15% 15%;
 
-    --card: 220 25% 11%;
-    --card-foreground: 210 40% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 15% 15%;
 
-    --popover: 220 25% 11%;
-    --popover-foreground: 210 40% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 15% 15%;
 
-    --primary: 262 83% 68%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 16%;
-    --secondary-foreground: 210 40% 96%;
+    --secondary: 240 10% 94%;
+    --secondary-foreground: 240 15% 25%;
 
-    --muted: 220 20% 16%;
-    --muted-foreground: 215 16% 55%;
+    --muted: 240 10% 94%;
+    --muted-foreground: 240 8% 50%;
 
-    --accent: 196 100% 60%;
-    --accent-foreground: 222 30% 8%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 262 83% 68%;
+    --border: 240 10% 88%;
+    --input: 240 10% 88%;
+    --ring: 262 83% 58%;
 
     --radius: 0.75rem;
 
-    --neon-purple: #a855f7;
-    --neon-cyan: #22d3ee;
-    --neon-pink: #f472b6;
-    --neon-orange: #fb923c;
-    --neon-green: #4ade80;
+    --accent-purple: #7c3aed;
+    --accent-pink: #db2777;
+    --accent-cyan: #0891b2;
+    --accent-orange: #ea580c;
+    --accent-green: #16a34a;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -59,7 +59,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Golos Text", sans-serif;
-    background: #0b0e1a;
+    background: #f1f0f7;
     overflow-x: hidden;
   }
 
@@ -67,44 +67,46 @@
     width: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: #0b0e1a;
+    background: #f1f0f7;
   }
   ::-webkit-scrollbar-thumb {
-    background: #a855f720;
+    background: #7c3aed30;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #a855f750;
+    background: #7c3aed60;
   }
 }
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.06);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08);
   }
 
   .neon-glow-purple {
     box-shadow:
-      0 0 20px rgba(168, 85, 247, 0.3),
-      0 0 40px rgba(168, 85, 247, 0.1);
+      0 4px 20px rgba(124, 58, 237, 0.2),
+      0 1px 4px rgba(124, 58, 237, 0.1);
   }
 
   .neon-glow-cyan {
     box-shadow:
-      0 0 20px rgba(34, 211, 238, 0.3),
-      0 0 40px rgba(34, 211, 238, 0.1);
+      0 4px 20px rgba(8, 145, 178, 0.2),
+      0 1px 4px rgba(8, 145, 178, 0.1);
   }
 
   .text-gradient-purple {
-    background: linear-gradient(135deg, #a855f7, #22d3ee);
+    background: linear-gradient(135deg, #7c3aed, #db2777);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -121,8 +123,8 @@
     padding: 1px;
     background: linear-gradient(
       135deg,
-      rgba(168, 85, 247, 0.5),
-      rgba(34, 211, 238, 0.5)
+      rgba(124, 58, 237, 0.25),
+      rgba(219, 39, 119, 0.2)
     );
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
@@ -167,10 +169,10 @@
   @keyframes pulseGlow {
     0%,
     100% {
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 2px 12px rgba(124, 58, 237, 0.25);
     }
     50% {
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+      box-shadow: 0 4px 24px rgba(124, 58, 237, 0.5);
     }
   }
 

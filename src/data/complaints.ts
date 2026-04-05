@@ -132,17 +132,17 @@ export const complaints: Complaint[] = [
 ];
 
 export const statusConfig: Record<ComplaintStatus, { label: string; color: string; bg: string; glow: string }> = {
-  new: { label: 'Новая', color: '#22d3ee', bg: 'rgba(34,211,238,0.12)', glow: 'rgba(34,211,238,0.3)' },
-  in_review: { label: 'На проверке', color: '#f472b6', bg: 'rgba(244,114,182,0.12)', glow: 'rgba(244,114,182,0.3)' },
-  resolved: { label: 'Решена', color: '#4ade80', bg: 'rgba(74,222,128,0.12)', glow: 'rgba(74,222,128,0.3)' },
-  rejected: { label: 'Отклонена', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', glow: 'rgba(148,163,184,0.3)' },
+  new: { label: 'Новая', color: '#0891b2', bg: 'rgba(8,145,178,0.1)', glow: 'rgba(8,145,178,0.2)' },
+  in_review: { label: 'На проверке', color: '#db2777', bg: 'rgba(219,39,119,0.1)', glow: 'rgba(219,39,119,0.2)' },
+  resolved: { label: 'Решена', color: '#16a34a', bg: 'rgba(22,163,74,0.1)', glow: 'rgba(22,163,74,0.2)' },
+  rejected: { label: 'Отклонена', color: '#64748b', bg: 'rgba(100,116,139,0.1)', glow: 'rgba(100,116,139,0.2)' },
 };
 
 export const priorityConfig: Record<ComplaintPriority, { label: string; color: string; bg: string }> = {
-  critical: { label: 'Критический', color: '#ef4444', bg: 'rgba(239,68,68,0.12)' },
-  high: { label: 'Высокий', color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
-  medium: { label: 'Средний', color: '#fbbf24', bg: 'rgba(251,191,36,0.12)' },
-  low: { label: 'Низкий', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)' },
+  critical: { label: 'Критический', color: '#dc2626', bg: 'rgba(220,38,38,0.08)' },
+  high: { label: 'Высокий', color: '#ea580c', bg: 'rgba(234,88,12,0.08)' },
+  medium: { label: 'Средний', color: '#d97706', bg: 'rgba(217,119,6,0.08)' },
+  low: { label: 'Низкий', color: '#64748b', bg: 'rgba(100,116,139,0.08)' },
 };
 
 export const typeConfig: Record<ComplaintType, { label: string; icon: string }> = {
